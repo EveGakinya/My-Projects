@@ -1,0 +1,144 @@
+---
+title: "Untitled"
+author: "Gakinya"
+date: "September 22, 2017"
+output: html_document
+---
+```{r}
+ls()
+rm(list = ls())
+require(Hmisc)
+dataOUT16<-spss.get("C:\\Users\\Eva\\Desktop\\sep\\dataOUT2016_3.sav")
+attach(dataOUT16)
+head(dataOUT16)
+names(dataOUT16)
+```
+```{r}
+
+tab1<-table(POINT.OF.SURVEY)
+tab1
+d2<-cbind(tab1, prop.table(tab1)*100)
+d2
+results_clipboard <- function(d2, sep="\t", dec=".", max.size=(200*1000))   # Copy a data.frame to clipboard
+{
+    write.table(d2, paste0("clipboard-", formatC(max.size, format="f", digits=0)), sep=sep, row.names=TRUE, dec=dec)
+}
+results_clipboard(d2) ###then paste in excel
+```
+```{r}
+
+
+Q2.COUNTRY.OF.RESIDENCE
+tab3<-table(Q.2COUNTRY.OF.RESIDENCE)
+tab3
+d2<-cbind(tab2, prop.table(tab2)*100)
+d2
+results_clipboard <- function(d2, sep="\t", dec=".", max.size=(200*1000))   # Copy a data.frame to clipboard
+{
+    write.table(d2, paste0("clipboard-", formatC(max.size, format="f", digits=0)), sep=sep, row.names=TRUE, dec=dec)
+}
+results_clipboard(d2) ###then paste in excel
+```
+
+```{r}
+dataOUT16$AGE_CATEG[Q7.AGE.OF.RESPODENT>69]<-"70+"
+dataOUT16$AGE_CATEG[Q7.AGE.OF.RESPODENT>60 & Q7.AGE.OF.RESPODENT <=69]<-"60-69"
+dataOUT16$AGE_CATEG[Q7.AGE.OF.RESPODENT>50 & Q7.AGE.OF.RESPODENT <=59]<-"50-59"
+dataOUT16$AGE_CATEG[Q7.AGE.OF.RESPODENT>40 & Q7.AGE.OF.RESPODENT <=49]<-"40-49"
+dataOUT16$AGE_CATEG[Q7.AGE.OF.RESPODENT>30 & Q7.AGE.OF.RESPODENT <=39]<-"30-39"
+dataOUT16$AGE_CATEG[Q7.AGE.OF.RESPODENT>20 & Q7.AGE.OF.RESPODENT <=29]<-"20-29"
+dataOUT16$AGE_CATEG[Q7.AGE.OF.RESPODENT<20]<-"below_20"
+dataOUT16$AGE_CATEG
+tab4<-table(dataOUT16$AGE_CATEG,Q8.GENDER.OF.RESPODENT)
+tab4
+NM<-prop.table(tab4)*100
+NM
+```
+
+```{r}
+#level of education by gender
+tab2<-table(Q5.HIGHEST.EDUCATION.LEVEL,Q8.GENDER.OF.RESPODENT)
+tab2
+d7<-prop.table(tab2)*100
+d7
+results_clipboard <- function(d7, sep="\t", dec=".", max.size=(200*1000))   # Copy a data.frame to clipboard
+{
+    write.table(d7, paste0("clipboard-", formatC(max.size, format="f", digits=0)), sep=sep, row.names=TRUE, dec=dec)
+}
+results_clipboard(d7)
+```
+```{r}
+#visitors occupation by gender
+levels(Q6.OCCUPATION.OF.RESPODENT)
+tab8<-table(Q6.OCCUPATION.OF.RESPODENT,Q8.GENDER.OF.RESPODENT)
+tab8
+d8<-prop.table(tab8)*100
+d8
+results_clipboard <- function(d8, sep="\t", dec=".", max.size=(200*1000))   # Copy a data.frame to clipboard
+{
+    write.table(d8, paste0("clipboard-", formatC(max.size, format="f", digits=0)), sep=sep, row.names=TRUE, dec=dec)
+}
+results_clipboard(d8)
+```
+```{r}
+#distribution of persons by category
+levels(TRAVELWITHYOU) ##"Alone"      "couple"     "family"     "in a group"
+num_trav<-subset(dataOUT16,TRAVELWITHYOU=="family")
+head(num_trav)
+num_trav$TRAVELWITHYOU
+length(num_trav$TRAVELWITHYOU)##304
+##############
+levels(TRAVELWITHYOU)
+num_trav<-subset(dataOUT16,TRAVELWITHYOU=="Alone")
+head(num_trav)
+num_trav$TRAVELWITHYOU
+length(num_trav$TRAVELWITHYOU)##2139
+##########
+levels(TRAVELWITHYOU)
+num_trav<-subset(dataOUT16,TRAVELWITHYOU=="couple")
+head(num_trav)
+num_trav$TRAVELWITHYOU
+length(num_trav$TRAVELWITHYOU)###151
+#########
+levels(TRAVELWITHYOU)
+num_trav<-subset(dataOUT16,TRAVELWITHYOU=="in a group")
+head(num_trav)
+num_trav$TRAVELWITHYOU
+length(num_trav$TRAVELWITHYOU)###242
+############
+categ<- c("Alone","couple","family","in a group")
+numb<-c(2139,151,304,242)
+persons_travelling<-data.frame(categ,numb)
+persons_travelling
+#################
+tab5<-table(persons_travelling$numb)
+tab5
+percent<-prop.table(persons_travelling$numb)*100
+percent
+d5<-cbind(persons_travelling,percent)
+d5
+results_clipboard <- function(d5, sep="\t", dec=".", max.size=(200*1000))   # Copy a data.frame to clipboard
+{
+    write.table(d5, paste0("clipboard-", formatC(max.size, format="f", digits=0)), sep=sep, row.names=FALSE, dec=dec)
+}
+results_clipboard(d5)
+```
+```{r}
+###mode of travel
+tab6<-table(Q10.MODE.OF.TRAVEL.OUT.OF.KENYA)
+tab6
+d6<-prop.table(tab6)*100
+d6
+results_clipboard <- function(d6, sep="\t", dec=".", max.size=(200*1000))   # Copy a data.frame to clipboard
+{
+    write.table(d6, paste0("clipboard-", formatC(max.size, format="f", digits=0)), sep=sep, row.names=FALSE, dec=dec)
+}
+results_clipboard(d6)
+```
+
+```{r}
+####distribution by use of credit card
+
+```
+
+
